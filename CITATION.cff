@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the published DMA-PULSE study."
+title: "DMA-PULSE: Scenario Driven Insider Threat Detection Using Dual Modelling Architecture"
+type: software
+authors:
+  - family-names: Lavanya
+    given-names: P.
+  - family-names: Vaishnavi
+    given-names: Pullela
+  - family-names: Giridhar
+    given-names: Pullela
+  - family-names: Glory
+    given-names: H. Anila
+  - family-names: Sriram
+    given-names: V. S. Shankar
+version: "1.0.0"
+date-released: 2026-05-01
+repository-code: "https://github.com/girip131175/DMA-PULSE"
+doi: "10.1007/978-3-032-23945-7_11"
+url: "https://doi.org/10.1007/978-3-032-23945-7_11"
