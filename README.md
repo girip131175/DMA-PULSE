@@ -65,6 +65,19 @@ This repository implements the described optimization pipeline as a configurable
 
 The framework supports binary classification of benign versus insider activity and multiclass classification across the four scenario categories. The paper evaluates accuracy, precision, recall/detection rate, F1-score, FPR, FNR, and MCC.
 
+## Implementation
+
+The repository contains a compact PyTorch implementation of the core pipeline:
+
+- `PulsePreprocessor` for the published preprocessing operations;
+- `PulseTransformer` for the self-attention sequence model;
+- `AOAOptimizer` for global hyperparameter exploration;
+- `RFOOptimizer` for local refinement;
+- a two-stage `DMAPulseOptimizer` wrapper;
+- a local training entry point accepting prepared `[N, 5, 11]` NumPy sequences.
+
+Because the paper does not publish sufficient pseudocode to claim an exact reconstruction of its optimizer implementation, the AOA/RFO module is explicitly documented as an **engineering implementation of the described global-to-local search strategy**.
+
 ## Published Results
 
 The following values are **reported in the published paper**. They are not presented as newly reproduced benchmarks by this repository.
@@ -95,10 +108,14 @@ DMA-PULSE/
 │       └── optimizers.py
 ├── experiments/
 │   └── train.py
+├── tests/
+│   ├── test_model.py
+│   └── test_optimizers.py
 ├── docs/
 │   └── REPRODUCIBILITY.md
 ├── figures/
 │   └── architecture.mmd
+├── .github/workflows/tests.yml
 ├── .gitignore
 ├── CITATION.cff
 ├── requirements.txt
