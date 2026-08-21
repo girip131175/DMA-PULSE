@@ -13,8 +13,21 @@ authors:
     given-names: H. Anila
   - family-names: Sriram
     given-names: V. S. Shankar
-version: "1.0.0"
-date-released: 2026-05-01
+version: "0.1.0"
 repository-code: "https://github.com/girip131175/DMA-PULSE"
-doi: "10.1007/978-3-032-23945-7_11"
-url: "https://doi.org/10.1007/978-3-032-23945-7_11"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Lavanya
+      given-names: P.
+    - family-names: Vaishnavi
+      given-names: Pullela
+    - family-names: Giridhar
+      given-names: Pullela
+    - family-names: Glory
+      given-names: H. Anila
+    - family-names: Sriram
+      given-names: V. S. Shankar
+  title: "Scenario Driven Insider Threat Detection Using Dual Modelling Architecture"
+  year: 2026
+  doi: "10.1007/978-3-032-23945-7_11"
