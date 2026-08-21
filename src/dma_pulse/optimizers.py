@@ -48,29 +48,30 @@ class AOAOptimizer:
         self.rng = np.random.default_rng(seed)
 
     def optimize(self, objective: Objective, iterations: int = 10) -> SearchResult:
-        bounds_low = np.array([p.low for p in self.space], dtype=float)
-        bounds_high = np.array([p.high for p in self.space], dtype=float)
-        pop = self.rng.uniform(bounds_low, bounds_high, size=(self.population, len(self.space)))
+        lows = np.array([p.low for p in self.space], dtype=float)
+        highs = np.array([p.high for p in self.space], dtype=float)
+        pop = self.rng.uniform(lows, highs, size=(self.population, len(self.space)))
         best_vector = pop[0].copy()
         best_score = float("inf")
 
         for iteration in range(iterations):
             progress = (iteration + 1) / max(iterations, 1)
-            for idx in range(self.population):
-                candidate = _decode(pop[idx], self.space)
-                score = float(objective(candidate))
+            for vector in pop:
+                score = float(objective(_decode(vector, self.space)))
                 if score < best_score:
                     best_score = score
-                    best_vector = pop[idx].copy()
+                    best_vector = vector.copy()
 
-            # Exploration contracts over time while density/volume-inspired
-            # perturbations keep candidates moving through the global region.
-            center = best_vector
+            # Exploration contracts toward the best candidate while a small
+            # stochastic term maintains global coverage.
             scale = 1.0 - progress
             noise = self.rng.normal(0.0, 1.0, size=pop.shape)
-            attraction = self.rng.uniform(0.0, 1.0, size=pop.shape) * (center - pop)
-            pop = pop + scale * attraction + 0.05 * scale * noise * (bounds_high - bounds_low)
-            pop = np.clip(pop, bounds_low, bounds_high)
+            attraction = self.rng.uniform(0.0, 1.0, size=pop.shape) * (best_vector - pop)
+            pop = np.clip(
+                pop + scale * attraction + 0.05 * scale * noise * (highs - lows),
+                lows,
+                highs,
+            )
 
         return SearchResult(_decode(best_vector, self.space), best_score)
 
@@ -90,22 +91,26 @@ class RFOOptimizer:
         iterations: int = 8,
         radius: float = 0.15,
     ) -> SearchResult:
-        center = np.array([seed_result.params[p.name] for p in self.space], dtype=float)
         lows = np.array([p.low for p in self.space], dtype=float)
         highs = np.array([p.high for p in self.space], dtype=float)
         span = highs - lows
-
+        seed_params = seed_result.params
+        center = np.array(
+            [seed_params.get(p.name, (p.low + p.high) / 2.0) for p in self.space],
+            dtype=float,
+        )
         best_vector = center.copy()
         best_score = seed_result.score
 
         for iteration in range(iterations):
             local_radius = radius * (1.0 - iteration / max(iterations, 1))
-            candidates = center + self.rng.normal(0, local_radius, size=(self.population, len(self.space))) * span
+            candidates = center + self.rng.normal(
+                0.0, local_radius, size=(self.population, len(self.space))
+            ) * span
             candidates = np.clip(candidates, lows, highs)
 
             for vector in candidates:
-                params = _decode(vector, self.space)
-                score = float(objective(params))
+                score = float(objective(_decode(vector, self.space)))
                 if score < best_score:
                     best_score = score
                     best_vector = vector.copy()
@@ -117,7 +122,12 @@ class RFOOptimizer:
 class DMAPulseOptimizer:
     """Convenience wrapper implementing the published AOA→RFO sequence."""
 
-    def __init__(self, global_space: Sequence[SearchParameter], local_space: Sequence[SearchParameter], seed: int = 42):
+    def __init__(
+        self,
+        global_space: Sequence[SearchParameter],
+        local_space: Sequence[SearchParameter],
+        seed: int = 42,
+    ):
         self.global_optimizer = AOAOptimizer(global_space, seed=seed)
         self.local_optimizer = RFOOptimizer(local_space, seed=seed + 1)
 
