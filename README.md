@@ -2,7 +2,7 @@
 
 ### Scenario-Driven Insider Threat Detection Using Dual Modelling Architecture
 
-> **Published research** — a hybrid Transformer-based framework combining self-attention with sequential metaheuristic optimization for scenario-driven insider threat detection.
+> **Published research** - a hybrid Transformer-based framework combining self-attention with sequential metaheuristic optimization for scenario-driven insider threat detection.
 
 [![Published Research](https://img.shields.io/badge/type-published%20research-blue)](#publication)
 [![Insider Threat Detection](https://img.shields.io/badge/domain-insider%20threat%20detection-red)](#)
@@ -165,4 +165,4 @@ P. Lavanya, Pullela Vaishnavi, **Pullela Giridhar**, H. Anila Glory, V. S. Shank
 
 ## Author
 
-**Pullela Giridhar** — cybersecurity and AI-security researcher.
+**Pullela Giridhar** - cybersecurity and AI-security researcher.
