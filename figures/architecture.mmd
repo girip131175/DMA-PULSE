@@ -1,0 +1,11 @@
+flowchart LR
+    A["PULSE\nSynthetic User Activity"] --> B["Preprocessing\nNormalization + Balancing"]
+    B --> C["Temporal Representation\n5 × 11"]
+    C --> D["Self-Attention\nTransformer"]
+    D --> E["AOA\nGlobal Exploration"]
+    E --> F["RFO\nLocal Refinement"]
+    F --> G["Optimized Transformer"]
+    G --> H["Classification"]
+    H --> H1["Binary\nBenign / Insider"]
+    H --> H2["Multiclass\n4 Threat Scenarios"]
+    H --> I["Evaluation"]
