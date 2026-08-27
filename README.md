@@ -145,7 +145,7 @@ P. Lavanya, Pullela Vaishnavi, **Pullela Giridhar**, H. Anila Glory, V. S. Shank
 
 *Artificial Intelligence and Sustainable Computing — Proceedings of ICSISCET 2025, Volume 2*, Springer Lecture Notes in Networks and Systems, vol. 1938, pp. 129–143, 2026.
 
-**DOI:** `10.1007/978-3-032-23945-7_11`
+**DOI:** `(https://link.springer.com/chapter/10.1007/978-3-032-23945-7_11)`
 
 ## Citation
 
